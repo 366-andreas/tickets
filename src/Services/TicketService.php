@@ -64,10 +64,9 @@ class TicketService implements TicketActions, EntityActions
      * @param int $userID
      * @param Model $entity
      * @param array $data
-     * @param Collection $attachments
      * @return $this
      */
-    public function createAsUser(int $userID, Model $entity, array $data, Collection $attachments): TicketService
+    public function createAsUser(int $userID, Model $entity, array $data): TicketService
     {
         $data = array_merge($data, [
             'entity_type' => $this->entity,
@@ -78,16 +77,15 @@ class TicketService implements TicketActions, EntityActions
             'created_by' => $userID
         ]);
 
-        return $this->create($data, $attachments);
+        return $this->create($data);
     }
 
     /**
      * @param Model $entity
      * @param array $data
-     * @param Collection $attachments
      * @return $this
      */
-    public function createAsEntity(Model $entity, array $data, Collection $attachments): TicketService
+    public function createAsEntity(Model $entity, array $data): TicketService
     {
         $data = array_merge($data, [
             'entity_type' => $this->entity,
@@ -98,31 +96,16 @@ class TicketService implements TicketActions, EntityActions
             'created_by' => $entity->getKey()
         ]);
 
-        return $this->create($data, $attachments);
+        return $this->create($data);
     }
 
     /**
      * @param array $data
-     * @param Collection $attachments
      * @return $this
      */
-    private function create(array $data, Collection $attachments): TicketService
+    private function create(array $data): TicketService
     {
-        /**
-         * @var Ticket $ticket
-         * @var TicketResponse $response
-         */
         $ticket = Ticket::query()->create($data);
-
-        $response = $ticket->responses()->create([
-            'entity_id' => $ticket->entity_id,
-            'user_id' => $ticket->assignee,
-            'response_number' => 1,
-            'message' => $ticket->subject,
-        ]);
-
-        $this->handleAttachments($response, $attachments);
-
-        return $this->setTicket($ticket->refresh());
+        return $this->setTicket($ticket);
     }
 }
