@@ -46,7 +46,7 @@ class SettingsService implements TicketSettingsActions, EntityActions
     public function updateSettings(int $userID, array $data): SettingsService
     {
         TicketSettings::query()->where('entity_type', $this->entity)
-            ->update(array_merge($data, ['created_by' => $userID]));
+            ->update(array_merge($data, ['modified_by' => $userID]));
 
         return $this;
     }

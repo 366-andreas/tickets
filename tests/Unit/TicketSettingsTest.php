@@ -55,7 +55,7 @@ class TicketSettingsTest extends TestCase
             array_merge($settings,
                 [
                     'entity_type' => $entity,
-                    'created_by' => $userId
+                    'modified_by' => $userId
                 ])
         );
     }
