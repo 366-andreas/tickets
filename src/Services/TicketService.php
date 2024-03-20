@@ -2,14 +2,13 @@
 
 namespace AndreasNik\Ticket\Services;
 
+use AndreasNik\Ticket\Enums\Status;
 use AndreasNik\Ticket\Interfaces\EntityActions;
 use AndreasNik\Ticket\Interfaces\TicketActions;
 use AndreasNik\Ticket\Models\Ticket;
-use AndreasNik\Ticket\Models\TicketResponse;
 use AndreasNik\Ticket\Services\Concerns\Response;
 use AndreasNik\Ticket\Services\Concerns\TicketOperations;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 
 class TicketService implements TicketActions, EntityActions
 {
@@ -73,6 +72,7 @@ class TicketService implements TicketActions, EntityActions
             'entity_id' => $entity->getKey(),
             'language_id' => $entity->getAttribute('language_id'),
             'waiting_response_from' => 'entity',
+            'status' => Status::WaitingOnEntity,
             'opened_by' => 'user',
             'created_by' => $userID
         ]);
@@ -92,6 +92,7 @@ class TicketService implements TicketActions, EntityActions
             'entity_id' => $entity->getKey(),
             'language_id' => $entity->getAttribute('language_id'),
             'waiting_response_from' => 'user',
+            'status' => Status::WaitingOnSupport,
             'opened_by' => 'entity',
             'created_by' => $entity->getKey()
         ]);

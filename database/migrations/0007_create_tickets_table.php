@@ -21,7 +21,8 @@ return new class extends Migration
 
             $table->string('subject')->nullable()->index();
 
-            $table->enum('status', ['pending', 'new', 'open', 'reopen', 'closed'])->default('open');
+            $table->enum('status', ['waiting_on_support', 'in_progress', 'waiting_on_other_department', 'reopened', 'waiting_on_entity', 'resolved'])
+                ->default('waiting_on_support');
             $table->enum('priority', ['low', 'normal', 'high', 'critical'])->index()->default('low');
             $table->enum('opened_by', ['entity', 'user'])->index()->default('user');
             $table->enum('waiting_response_from', ['entity', 'user'])->index()->default('user');

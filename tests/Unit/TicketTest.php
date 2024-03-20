@@ -56,7 +56,7 @@ class TicketTest extends TestCase
     {
         $ticket = helpdesk($entity)->ticket();
 
-        $ticket = $asUser ? $ticket->createAsUser(112, $model, $ticketData, $attachments) : $ticket->createAsEntity($model, $ticketData);
+        $ticket = $asUser ? $ticket->createAsUser(112, $model, $ticketData) : $ticket->createAsEntity($model, $ticketData);
 
         $ticketObject = $ticket->getTicket();
 
