@@ -19,8 +19,6 @@ use Illuminate\Support\Collection;
  * @property string $waiting_response_from
  * @property TicketCategory $category
  * @property Collection<TicketResponse> $responses
- * @property Collection<TicketAttachment> $attachments
- *
  */
 class Ticket extends Model
 {
@@ -39,11 +37,6 @@ class Ticket extends Model
     public function responses(): HasMany
     {
         return $this->hasMany(TicketResponse::class);
-    }
-
-    public function attachments(): HasMany
-    {
-        return $this->hasMany(TicketAttachment::class);
     }
 
     public function feedback(): HasMany
